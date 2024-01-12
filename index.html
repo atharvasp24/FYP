@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Forest Prediction App</title>
+</head>
+<body>
+    <h1>Random Forest Prediction App</h1>
+    <form action="/predict" method="post" id="prediction-form">
+        <label for="nitrogen">Nitrogen:</label>
+        <input type="number" id="nitrogen" name="nitrogen" step="any" required><br>
+
+        <label for="phosphoros">Phosphoros:</label>
+        <input type="number" id="phosphoros" name="phosphoros" step="any" required><br>
+
+        <label for="potassium">Potassium:</label>
+        <input type="number" id="potassium" name="potassium" step="any" required><br>
+
+        <label for="temp">Temp:</label>
+        <input type="number" id="temp" name="temp" step="any" required><br>
+
+        <label for="humidity">Humidity:</label>
+        <input type="number" id="humidity" name="humidity" step="any" required><br>
+
+        <label for="ph">pH:</label>
+        <input type="number" id="ph" name="ph" step="any" required><br>
+
+        <button type="button" onclick="predict()">Predict</button>
+    </form>
+
+    <div id="prediction-result"></div>
+
+    <script>
+        async function predict() {
+            const form = document.getElementById('prediction-form');
+            const formData = new FormData(form);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('prediction-result').innerHTML = `<p>Predicted Crop: ${result.prediction}</p>`;
+        }
+    </script>
+</body>
+</html>
